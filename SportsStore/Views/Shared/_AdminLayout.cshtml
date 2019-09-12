@@ -9,10 +9,13 @@
     <script type="text/javascript" asp-src-include="\lib\scripts\jquery\*.*"></script>
     <title>@ViewData["Title"]</title>
 </head>
-<body class="bg-info p-2">
-    <div>
-        <div><h4>@ViewBag.Title</h4></div>
-        @RenderBody()
-    </div>
-</body>
+
+<body class="m-1 p-1">
+    <div class="bg-info p-2">
+        <h4>@ViewBag.Title</h4>
+    </div> 
+    @if (TempData["message"] != null)
+    {
+        <div class="alert alert-success">@TempData["message"]</div>} @RenderBody()
+    </body>
 </html>

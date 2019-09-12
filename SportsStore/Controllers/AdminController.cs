@@ -19,5 +19,24 @@ namespace SportsStore.Controllers
         }
         // GET: /<controller>/
         public ViewResult Index() => View(repository.Products);
+        public ViewResult Edit(int productId) =>
+            View(repository.Products.FirstOrDefault( p => p.ProductID == productId));
+
+        [HttpPost]
+        public IActionResult Edit(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.SaveProduct(product);
+                TempData["message"] = $"{product.Name} has been saved";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                //there is something worng with the data valus
+                return View(product);
+            }
+        }
+        
     }
 }
