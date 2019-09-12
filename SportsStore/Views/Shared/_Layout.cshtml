@@ -1,0 +1,32 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <link rel="stylesheet"
+        asp-href-include="\lib\css\dist\**\*.min.css"
+           />
+        <link rel="stylesheet" asp-href-include="\lib\fontawesome4.7\css\all.css" />
+        <script type="text/javascript" asp-src-include="\lib\scripts\jquery\*.*"></script>
+        <title>SportsStore</title>
+    </head>
+    <body>
+        <div class="container-fluid" role="navigation">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 bg-dark">
+                    <a class="col navbar-brand" href="#">
+                        <h2>SportsStore</h2>
+                    </a>
+                    <div class="col-sm-4 text-sm-right float-sm-right">
+                        @await Component.InvokeAsync("CartSummary")
+                    </div>
+                </div>
+             </div>
+            <div class="row m-1 p-1">
+                <div id="categories" class="col-sm-3">
+                    @await Component.InvokeAsync("NavigationMenu")
+                </div>
+                @RenderBody()
+            </div>
+        </div>
+    </body>
+</html>
