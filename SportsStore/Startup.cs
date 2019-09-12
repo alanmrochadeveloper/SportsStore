@@ -24,7 +24,10 @@ namespace SportsStore
             
             services.AddDbContext<ApplicationDbContext> (
                     
-                options => options.UseSqlServer(Configuration["Data:SportsStoreProducts:ConnectionStringHome"])
+                options => {
+                    options.EnableSensitiveDataLogging(true);
+                    options.UseSqlServer(Configuration["Data:SportsStoreProducts:ConnectionStringHome"]);
+                }
             );
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddTransient<IOrderRepository, EFOrderRepository>();
