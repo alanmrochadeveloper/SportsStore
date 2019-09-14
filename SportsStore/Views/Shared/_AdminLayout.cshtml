@@ -7,6 +7,16 @@
           asp-href-include="\lib\css\dist\**\*.min.css" />
     <link rel="stylesheet" asp-href-include="\lib\fontawesome4.7\css\all.css" />
     <script type="text/javascript" asp-src-include="\lib\scripts\jquery\*.*"></script>
+    <script src="~/lib/scripts/jquery/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/scripts/jquery/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <style>
+        
+        .input-validation-error {
+            border-color: red;
+            background-color: #fee;
+        }
+    
+    </style>
     <title>@ViewData["Title"]</title>
 </head>
 
