@@ -28,7 +28,14 @@ namespace SportsStore.Controllers
             if (ModelState.IsValid)
             {
                 repository.SaveProduct(product);
-                TempData["message"] = $"{product.Name} has been saved";
+                if (product.ProductID != 0)
+                {
+                    TempData["message"] = $"{product.Name} has been saved";
+                }
+                else
+                {
+                    TempData["message"] = $"{product.Name} has been created";
+                }
                 return RedirectToAction("Index");
             }
             else
@@ -36,6 +43,12 @@ namespace SportsStore.Controllers
                 //there is something worng with the data valus
                 return View(product);
             }
+        }
+        public ViewResult Create()
+        {
+            ViewBag.Title = "Create new product";
+            ViewData["Title"] = "Creating...";
+            return View("Edit", new Product());
         }
         
     }

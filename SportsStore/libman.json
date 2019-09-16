@@ -10,6 +10,15 @@
       "provider": "unpkg",
       "library": "bootstrap@4.3.1",
       "destination": "wwwroot/lib/css"
+    },
+    {
+      "provider": "unpkg",
+      "library": "jquery-validation@1.17.0",
+      "destination": "wwwroot/lib/scripts/jquery/jquery-validation"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.6",
+      "destination": "wwwroot/lib/scripts/jquery/jquery-validation-unobtrusive"
     }
   ]
 }

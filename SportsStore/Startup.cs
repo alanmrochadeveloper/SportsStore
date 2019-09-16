@@ -26,7 +26,7 @@ namespace SportsStore
                     
                 options => {
                     options.EnableSensitiveDataLogging(true);
-                    options.UseSqlServer(Configuration["Data:SportsStoreProducts:ConnectionStringJob"]);
+                    options.UseSqlServer(Configuration["Data:SportsStoreProducts:ConnectionStringHome"]);
                 }
             );
             services.AddTransient<IProductRepository, EFProductRepository>();
