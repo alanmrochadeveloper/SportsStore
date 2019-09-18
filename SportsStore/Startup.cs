@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using SportsStore.Models;
 using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;//teste second
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace SportsStore
 {
@@ -21,14 +22,49 @@ namespace SportsStore
         public IConfiguration Configuration{get;}
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            services.AddDbContext<ApplicationDbContext> (
-                    
-                options => {
-                    options.EnableSensitiveDataLogging(true);
-                    options.UseSqlServer(Configuration["Data:SportsStoreProducts:ConnectionStringHome"]);
-                }
-            );
+
+            if (Environment.MachineName == "DESKTOP-FJS6ERP")
+            {
+                services.AddDbContext<ApplicationDbContext>(
+                   options => {
+                       options.EnableSensitiveDataLogging(true);
+                       options.UseSqlServer(Configuration["Data:SportsStoreProducts:ConnectionStringJob"]);
+                   }
+                );
+            }
+            else if(Environment.MachineName == "DESKTOP-ALANM")
+            {
+                services.AddDbContext<ApplicationDbContext>(
+                   options => {
+                       options.EnableSensitiveDataLogging(true);
+                       options.UseSqlServer(Configuration["Data:SportsStoreProducts:ConnectionStringHome"]);
+                   }
+                );
+            }
+            if (Environment.MachineName == "DESKTOP-FJS6ERP")
+            {
+                services.AddDbContext<AppIdentityDbContext>(
+                   options => {
+                       options.EnableSensitiveDataLogging(true);
+                       options.UseSqlServer(Configuration["Data:SportsStoreIdentity:ConnectionStringJob"]);
+                   }
+                );
+            }
+            else if (Environment.MachineName == "DESKTOP-ALANM")
+            {
+                services.AddDbContext<AppIdentityDbContext>(
+                   options => {
+                       options.EnableSensitiveDataLogging(true);
+                       options.UseSqlServer(Configuration["Data:SportsStoreIdentity:ConnectionStringHome"]);
+                   }
+                );
+            }
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddTransient<IOrderRepository, EFOrderRepository>();
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));/* >>>
@@ -60,6 +96,7 @@ namespace SportsStore
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
+            app.UseAuthentication();
             app.UseMvc( routes => {
                 routes.MapRoute(
                     name: null,
@@ -92,6 +129,7 @@ namespace SportsStore
                 );
             });
             SeedData.EnsurePopulated(app);
+            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }
