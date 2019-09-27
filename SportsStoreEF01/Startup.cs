@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using SportsStoreEF01.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore; //netcore3.0 need an manual install in cli. or nuget gui manager ex. dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 3.0.0
 using Microsoft.Extensions.Configuration;
 
 namespace SportsStoreEF01
@@ -22,13 +22,14 @@ namespace SportsStoreEF01
         public void ConfigureServices(IServiceCollection services)
         {
             string conString = Configuration["ConnectionStrings:DefaultConnection"];
-            services.AddMvc();
+            //services.AddRazorPages();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddDbContext<DataContext>(options => options.UseSqlServer(conString));
             services.AddTransient<IRepository, DataRepository>(); //means that a single object will be created the first time that a dependency on the IRepository interface is resolved and then used for all subsequent dependencies
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
